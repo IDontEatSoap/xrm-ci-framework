@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
-using Microsoft.Xrm.Client;
-using Microsoft.Xrm.Client.Services;
+using Microsoft.Xrm.Tooling.Connector;
 using Microsoft.Xrm.Sdk;
 
 namespace Xrm.Framework.CI.PowerShell.Command
@@ -19,17 +18,17 @@ namespace Xrm.Framework.CI.PowerShell.Command
         {
             base.BeginProcessing();
 
-            CrmConnection connection = CrmConnection.Parse(ConnectionString);
-            OrganizationService = new OrganizationService(connection);
+            CrmServiceClient client = new CrmServiceClient(ConnectionString);
+            OrganizationService = client.OrganizationServiceProxy;
         }
 
         protected override void EndProcessing()
         {
             base.EndProcessing();
 
-            var typedService = OrganizationService as OrganizationService;
+            /*var typedService = OrganizationService as IOrganizationService;
             if (typedService != null)
-                typedService.Dispose();
+                typedService.Dispose();*/
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Client.Services;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Xrm.Framework.CI.Common.Entities;
@@ -67,8 +66,8 @@ namespace Xrm.Framework.CI.PowerShell.Command
             foreach (var fetchXml in fetchXmlQueries)
             {
                 var fetchXmlToQueryExpressionRequest = new FetchXmlToQueryExpressionRequest { FetchXml = fetchXml };
-                var response = OrganizationService.Execute<FetchXmlToQueryExpressionResponse>(fetchXmlToQueryExpressionRequest);
-                yield return response.Query;
+                var response = OrganizationService.Execute(fetchXmlToQueryExpressionRequest);
+                yield return ((FetchXmlToQueryExpressionResponse)response).Query;
             }
         }
 

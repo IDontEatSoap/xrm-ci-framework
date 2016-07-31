@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Crm.Sdk.Messages;
-using Microsoft.Xrm.Client.Services;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -12,8 +11,8 @@ namespace Xrm.Framework.CI.PowerShell.Common
         public static IEnumerable<Entity> RetrieveAll(this IOrganizationService organizationService, FetchExpression query)
         {
             var request = new FetchXmlToQueryExpressionRequest { FetchXml = query.Query };
-            var repsonse = organizationService.Execute<FetchXmlToQueryExpressionResponse>(request);
-            return RetrieveAll(organizationService, repsonse.Query);
+            var repsonse = organizationService.Execute(request);
+            return RetrieveAll(organizationService, ((FetchXmlToQueryExpressionResponse)repsonse).Query);
         }
 
         public static IEnumerable<Entity> RetrieveAll(this IOrganizationService organizationService, QueryExpression query)
